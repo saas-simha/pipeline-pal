@@ -8,6 +8,7 @@ import SourcePanel, { type SourceConfig } from "@/components/pipeline/SourcePane
 import TargetPanel, { type TargetConfig } from "@/components/pipeline/TargetPanel";
 import PipelineStepsPanel, { type PipelineStep } from "@/components/pipeline/PipelineStepsPanel";
 import PipelineFlowBar, { type StageStatus } from "@/components/pipeline/PipelineFlowBar";
+import WorkflowPreview from "@/components/pipeline/WorkflowPreview";
 
 export default function PipelineBuilder() {
   const [activeStage, setActiveStage] = useState<"source" | "pipeline" | "target">("pipeline");
@@ -82,36 +83,6 @@ export default function PipelineBuilder() {
     }, 2000);
   }, []);
 
-  const generateYaml = () => {
-    const stepsYaml = steps
-      .map((s) => {
-        if (s.type === "checkout") {
-          return `      - name: ${s.name}\n        uses: ${s.command}\n        with:\n          repository: ${source.repository}\n          ref: ${source.branch}`;
-        }
-        return `      - name: ${s.name}\n        run: ${s.command}`;
-      })
-      .join("\n\n");
-
-    return `name: Deploy to ${target.domain}
-
-on:
-  push:
-    branches:
-      - ${source.branch}
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-${stepsYaml}
-
-    deploy:
-      type: ${target.deployType}
-      host: ${target.server}
-      path: ${target.deployPath}`;
-  };
-
   return (
     <div className="p-6 lg:p-8 space-y-6 animate-fade-in">
       {/* Header */}
@@ -178,11 +149,7 @@ ${stepsYaml}
 
       {/* Stage Panels */}
       {showYaml ? (
-        <div className="bg-card border border-border rounded-lg p-5">
-          <pre className="text-sm font-mono text-secondary-foreground leading-relaxed whitespace-pre-wrap overflow-x-auto">
-            {generateYaml()}
-          </pre>
-        </div>
+        <WorkflowPreview source={source} target={target} steps={steps} />
       ) : (
         <div className="space-y-6">
           {activeStage === "source" && (
