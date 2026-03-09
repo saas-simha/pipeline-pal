@@ -10,24 +10,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build project
-      run: npm run build
+      - name: Build project
+        run: npm run build
 
-    - name: Deploy dist folder via FTP
-      uses: ./.github/actions/ftp-deploy
-      with:
-        server: ${{ secrets.AI_FTP_SERVER }}
-        username: ${{ secrets.AI_FTP_USERNAME }}
-        password: ${{ secrets.AI_FTP_PASSWORD }}
-        path: ${{ secrets.AI_FTP_PATH }}
+      - name: Verify production build output
+        run: |
+          test -d dist
+          test -f dist/index.html
+          grep -q "/assets/" dist/index.html
+          if grep -q "/src/main.tsx" dist/index.html; then
+            echo "Error: dist/index.html still references /src/main.tsx"
+            exit 1
+          fi
+
+      - name: Deploy dist folder via FTP
+        uses: ./.github/actions/ftp-deploy
+        with:
+          server: ${{ secrets.AI_FTP_SERVER }}
+          username: ${{ secrets.AI_FTP_USERNAME }}
+          password: ${{ secrets.AI_FTP_PASSWORD }}
+          path: ${{ secrets.AI_FTP_PATH }}
