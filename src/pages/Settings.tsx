@@ -44,7 +44,7 @@ export default function SettingsPage() {
         {/* Content */}
         <div className="flex-1 max-w-xl">
           {activeTab === "profile" && (
-            <div className="glass-card p-6 space-y-5">
+            <div className="bg-card border border-border rounded-lg p-6 space-y-5">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Profile</h2>
               <div className="space-y-4">
                 <div className="space-y-2">
