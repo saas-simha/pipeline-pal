@@ -55,7 +55,7 @@ export default function SettingsPage() {
                   <Label htmlFor="settings-email">Email</Label>
                   <Input id="settings-email" defaultValue="john@example.com" className="bg-secondary border-border" />
                 </div>
-                <Button variant="glow">Save Changes</Button>
+                <Button>Save Changes</Button>
               </div>
             </div>
           )}
