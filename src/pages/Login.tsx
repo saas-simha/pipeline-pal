@@ -78,7 +78,7 @@ export default function Login() {
                 </button>
               </div>
             </div>
-            <Button type="submit" variant="glow" className="w-full">
+            <Button type="submit" className="w-full">
               Sign In
             </Button>
           </form>

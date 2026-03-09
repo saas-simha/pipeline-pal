@@ -99,7 +99,7 @@ export default function PullRequests() {
                 </div>
 
                 <div className="flex gap-2 mt-4">
-                  <Button size="sm" variant="glow" className="gap-1.5 h-8 text-xs">
+                  <Button size="sm" className="gap-1.5 h-8 text-xs">
                     <GitMerge className="h-3 w-3" />
                     Merge
                   </Button>

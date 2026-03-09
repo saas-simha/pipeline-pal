@@ -120,7 +120,7 @@ export default function CreateProject() {
         </div>
 
         <div className="flex gap-3 pt-2">
-          <Button type="submit" variant="glow" className="flex-1">
+          <Button type="submit" className="flex-1">
             Create Project
           </Button>
           <Button type="button" variant="outline" onClick={() => navigate(-1)}>

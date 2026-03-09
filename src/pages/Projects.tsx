@@ -69,7 +69,7 @@ export default function Projects() {
           <p className="text-muted-foreground text-sm mt-1">{projects.length} projects configured</p>
         </div>
         <Link to="/projects/new">
-          <Button variant="glow" className="gap-2">
+          <Button className="gap-2">
             <Plus className="h-4 w-4" />
             New Project
           </Button>

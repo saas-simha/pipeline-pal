@@ -79,7 +79,7 @@ export default function SettingsPage() {
                 <Input id="pat" type="password" placeholder="ghp_xxxxxxxxxxxx" className="bg-secondary border-border font-mono text-sm" />
                 <p className="text-xs text-muted-foreground">Required for pushing workflow files and managing PRs</p>
               </div>
-              <Button variant="glow">Save Token</Button>
+              <Button>Save Token</Button>
             </div>
           )}
 

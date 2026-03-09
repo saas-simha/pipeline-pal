@@ -86,7 +86,7 @@ ${stepsYaml}`;
           <Button variant="outline" onClick={() => setShowYaml(!showYaml)}>
             {showYaml ? "Visual" : "YAML Preview"}
           </Button>
-          <Button variant="glow" className="gap-2">
+          <Button className="gap-2">
             <Save className="h-4 w-4" />
             Save & Push
           </Button>
