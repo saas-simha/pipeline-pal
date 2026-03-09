@@ -123,7 +123,7 @@ ${stepsYaml}`;
               {steps.map((step, i) => (
                 <div
                   key={step.id}
-                  className="glass-card p-4 flex items-center gap-3 group hover:glow-border transition-all"
+                  className="bg-card border border-border rounded-lg p-4 flex items-center gap-3 group hover:bg-muted/50 transition-all"
                 >
                   <GripVertical className="h-4 w-4 text-muted-foreground shrink-0 cursor-grab" />
                   <span className="text-xs font-mono text-muted-foreground w-5 shrink-0">{i + 1}</span>
