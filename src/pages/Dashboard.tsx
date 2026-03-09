@@ -3,59 +3,49 @@ import {
   GitCommit,
   Rocket,
   CheckCircle2,
-  XCircle,
   Clock,
   ArrowUpRight,
   GitBranch,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import StatusBadge from "@/components/StatusBadge";
+import { isDemo } from "@/lib/env";
+import { demoStats, demoDeploymentHistory, demoRecentActivity } from "@/lib/demo-data";
 
-const stats = [
-  { label: "Total Projects", value: "12", icon: Rocket, change: "+2 this week" },
-  { label: "Deployments", value: "148", icon: Activity, change: "+23 this week" },
-  { label: "Success Rate", value: "94.6%", icon: CheckCircle2, change: "+1.2%" },
-  { label: "Avg Deploy Time", value: "2m 34s", icon: Clock, change: "-12s" },
-];
-
-const recentDeployments = [
-  { project: "SmartTaskPro", branch: "main", commit: "a3f8c2d", status: "success" as const, time: "3 min ago", user: "john" },
-  { project: "EcommerceAPI", branch: "staging", commit: "f1e9b4a", status: "running" as const, time: "8 min ago", user: "sarah" },
-  { project: "PortfolioSite", branch: "main", commit: "c7d2e1f", status: "failed" as const, time: "25 min ago", user: "john" },
-  { project: "ChatApp", branch: "develop", commit: "b5a3c8e", status: "success" as const, time: "1 hour ago", user: "mike" },
-  { project: "AnalyticsDash", branch: "main", commit: "e2f4a7b", status: "success" as const, time: "2 hours ago", user: "sarah" },
-];
-
-const recentActivity = [
-  { action: "Deployed", project: "SmartTaskPro", detail: "to production", time: "3 min ago" },
-  { action: "Pipeline updated", project: "EcommerceAPI", detail: "added test step", time: "15 min ago" },
-  { action: "PR merged", project: "PortfolioSite", detail: "#42 fix header", time: "30 min ago" },
-  { action: "Project created", project: "ChatApp", detail: "new repository", time: "1 hour ago" },
-];
+const statIcons = [Rocket, Activity, CheckCircle2, Clock];
 
 export default function Dashboard() {
+  const stats = demoStats;
+  const recentDeployments = demoDeploymentHistory;
+  const recentActivity = demoRecentActivity;
+
   return (
     <div className="p-6 lg:p-8 space-y-6">
-      {/* Header */}
       <div>
         <h1 className="text-xl font-semibold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground text-sm mt-1">Overview of your deployment pipeline</p>
+        <p className="text-muted-foreground text-sm mt-1">
+          Overview of your deployment pipeline
+          {isDemo && <span className="ml-2 text-[hsl(var(--warning))]">(Demo Data)</span>}
+        </p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat) => (
-          <div key={stat.label} className="bg-card border border-border rounded-lg p-5 transition-colors">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{stat.label}</p>
-                <p className="text-2xl font-semibold mt-1 tracking-tight">{stat.value}</p>
+        {stats.map((stat, i) => {
+          const Icon = statIcons[i];
+          return (
+            <div key={stat.label} className="bg-card border border-border rounded-lg p-5 transition-colors">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{stat.label}</p>
+                  <p className="text-2xl font-semibold mt-1 tracking-tight">{stat.value}</p>
+                </div>
+                <Icon className="h-4 w-4 text-muted-foreground" />
               </div>
-              <stat.icon className="h-4 w-4 text-muted-foreground" />
+              <p className="text-xs text-primary font-mono mt-3">{stat.change}</p>
             </div>
-            <p className="text-xs text-primary font-mono mt-3">{stat.change}</p>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
@@ -68,8 +58,8 @@ export default function Dashboard() {
             </Link>
           </div>
           <div className="divide-y divide-border">
-            {recentDeployments.map((dep, i) => (
-              <div key={i} className="flex items-center gap-4 px-5 py-3 hover:bg-muted/50 transition-colors">
+            {recentDeployments.map((dep) => (
+              <div key={dep.id} className="flex items-center gap-4 px-5 py-3 hover:bg-muted/50 transition-colors">
                 <StatusBadge status={dep.status} />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{dep.project}</p>
@@ -80,7 +70,10 @@ export default function Dashboard() {
                     <span className="text-xs text-muted-foreground font-mono">{dep.commit}</span>
                   </div>
                 </div>
-                <span className="text-xs text-muted-foreground whitespace-nowrap">{dep.time}</span>
+                <div className="text-right shrink-0">
+                  <span className="text-xs text-muted-foreground">{dep.time}</span>
+                  <p className="text-xs font-mono text-muted-foreground mt-0.5">{dep.duration}</p>
+                </div>
               </div>
             ))}
           </div>

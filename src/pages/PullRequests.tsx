@@ -1,68 +1,20 @@
 import { GitPullRequest, GitMerge, MessageSquare, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import StatusBadge from "@/components/StatusBadge";
-
-const pullRequests = [
-  {
-    id: 42,
-    title: "Fix header responsive layout",
-    project: "PortfolioSite",
-    author: "john",
-    branch: "fix/header-layout",
-    target: "main",
-    status: "success" as const,
-    comments: 3,
-    time: "2 hours ago",
-    additions: 45,
-    deletions: 12,
-  },
-  {
-    id: 38,
-    title: "Add Docker deployment support",
-    project: "EcommerceAPI",
-    author: "sarah",
-    branch: "feature/docker",
-    target: "staging",
-    status: "running" as const,
-    comments: 7,
-    time: "5 hours ago",
-    additions: 234,
-    deletions: 56,
-  },
-  {
-    id: 35,
-    title: "Update CI pipeline configuration",
-    project: "SmartTaskPro",
-    author: "mike",
-    branch: "ci/update-pipeline",
-    target: "main",
-    status: "success" as const,
-    comments: 1,
-    time: "1 day ago",
-    additions: 18,
-    deletions: 8,
-  },
-  {
-    id: 31,
-    title: "Refactor authentication module",
-    project: "ChatApp",
-    author: "john",
-    branch: "refactor/auth",
-    target: "develop",
-    status: "failed" as const,
-    comments: 5,
-    time: "2 days ago",
-    additions: 189,
-    deletions: 134,
-  },
-];
+import { isDemo } from "@/lib/env";
+import { demoPullRequests } from "@/lib/demo-data";
 
 export default function PullRequests() {
+  const pullRequests = demoPullRequests;
+
   return (
     <div className="p-6 lg:p-8 space-y-6 animate-fade-in">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Pull Requests</h1>
-        <p className="text-muted-foreground text-sm mt-1">Review and manage pull requests</p>
+        <p className="text-muted-foreground text-sm mt-1">
+          Review and manage pull requests
+          {isDemo && <span className="ml-2 text-[hsl(var(--warning))]">(Demo)</span>}
+        </p>
       </div>
 
       <div className="space-y-3">

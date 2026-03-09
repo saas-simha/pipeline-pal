@@ -1,72 +1,25 @@
 import { Link } from "react-router-dom";
-import { Plus, GitBranch, Clock, ExternalLink, MoreVertical } from "lucide-react";
+import { Plus, GitBranch, Clock, ExternalLink, MoreVertical, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import StatusBadge from "@/components/StatusBadge";
-
-const projects = [
-  {
-    name: "SmartTaskPro",
-    repo: "user/smart-task-pro",
-    branch: "main",
-    deployType: "FTP",
-    lastDeploy: "3 min ago",
-    status: "success" as const,
-    commits: 245,
-  },
-  {
-    name: "EcommerceAPI",
-    repo: "user/ecommerce-api",
-    branch: "staging",
-    deployType: "Docker",
-    lastDeploy: "8 min ago",
-    status: "running" as const,
-    commits: 512,
-  },
-  {
-    name: "PortfolioSite",
-    repo: "user/portfolio-site",
-    branch: "main",
-    deployType: "cPanel",
-    lastDeploy: "25 min ago",
-    status: "failed" as const,
-    commits: 89,
-  },
-  {
-    name: "ChatApp",
-    repo: "user/chat-app",
-    branch: "develop",
-    deployType: "VPS",
-    lastDeploy: "1 hour ago",
-    status: "success" as const,
-    commits: 178,
-  },
-  {
-    name: "AnalyticsDash",
-    repo: "user/analytics-dash",
-    branch: "main",
-    deployType: "SFTP",
-    lastDeploy: "2 hours ago",
-    status: "success" as const,
-    commits: 334,
-  },
-  {
-    name: "BlogPlatform",
-    repo: "user/blog-platform",
-    branch: "main",
-    deployType: "Docker",
-    lastDeploy: "5 hours ago",
-    status: "pending" as const,
-    commits: 67,
-  },
-];
+import { isDemo } from "@/lib/env";
+import { demoProjects } from "@/lib/demo-data";
+import { useState } from "react";
+import SimulatedDeploy from "@/components/SimulatedDeploy";
 
 export default function Projects() {
+  const projects = demoProjects;
+  const [deployingProject, setDeployingProject] = useState<string | null>(null);
+
   return (
     <div className="p-6 lg:p-8 space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Projects</h1>
-          <p className="text-muted-foreground text-sm mt-1">{projects.length} projects configured</p>
+          <p className="text-muted-foreground text-sm mt-1">
+            {projects.length} projects configured
+            {isDemo && <span className="ml-2 text-[hsl(var(--warning))]">(Demo)</span>}
+          </p>
         </div>
         <Link to="/projects/new">
           <Button className="gap-2">
@@ -75,6 +28,13 @@ export default function Projects() {
           </Button>
         </Link>
       </div>
+
+      {deployingProject && (
+        <SimulatedDeploy
+          projectName={deployingProject}
+          onComplete={() => setDeployingProject(null)}
+        />
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {projects.map((project) => (
@@ -107,9 +67,21 @@ export default function Projects() {
 
             <div className="flex items-center justify-between mt-4 pt-4 border-t border-border/30">
               <StatusBadge status={project.status} />
-              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                <Clock className="h-3 w-3" />
-                {project.lastDeploy}
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Clock className="h-3 w-3" />
+                  {project.lastDeploy}
+                </div>
+                {isDemo && (
+                  <button
+                    onClick={() => setDeployingProject(project.name)}
+                    className="flex items-center gap-1 text-xs text-primary hover:underline"
+                    disabled={!!deployingProject}
+                  >
+                    <Play className="h-3 w-3" />
+                    Deploy
+                  </button>
+                )}
               </div>
             </div>
           </div>
