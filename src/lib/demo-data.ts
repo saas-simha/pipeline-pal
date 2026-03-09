@@ -1,3 +1,4 @@
+// No changes, only deployment
 export const demoProjects = [
   {
     name: "SmartTaskPro",
