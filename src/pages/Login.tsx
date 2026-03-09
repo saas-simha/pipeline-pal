@@ -22,7 +22,7 @@ export default function Login() {
         <div className="relative z-10 text-center px-12 animate-fade-in">
           <Rocket className="h-16 w-16 text-primary mx-auto mb-6" />
           <h1 className="text-5xl font-bold tracking-tight mb-4">
-            Dev<span className="text-gradient">Deploy</span>
+            Dev<span className="text-primary">Deploy</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-md mx-auto leading-relaxed">
             Your deployment control center. Build pipelines, push workflows, and ship with confidence.
