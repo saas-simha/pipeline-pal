@@ -113,7 +113,7 @@ ${stepsYaml}`;
           </div>
 
           {showYaml ? (
-            <div className="glass-card p-5">
+            <div className="bg-card border border-border rounded-lg p-5">
               <pre className="text-sm font-mono text-secondary-foreground leading-relaxed whitespace-pre-wrap overflow-x-auto">
                 {generateYaml()}
               </pre>
