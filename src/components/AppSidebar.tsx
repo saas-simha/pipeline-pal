@@ -35,10 +35,10 @@ export default function AppSidebar() {
     >
       {/* Logo */}
       <div className="flex items-center gap-2.5 px-4 h-14 border-b border-sidebar-border">
-        <Rocket className="h-6 w-6 text-primary shrink-0" />
+        <Rocket className="h-5 w-5 text-primary shrink-0" />
         {!collapsed && (
-          <span className="text-lg font-bold tracking-tight text-foreground">
-            Dev<span className="text-gradient">Deploy</span>
+          <span className="text-base font-semibold tracking-tight text-foreground">
+            DevDeploy
           </span>
         )}
       </div>
@@ -48,7 +48,7 @@ export default function AppSidebar() {
         <Link
           to="/projects/new"
           className={cn(
-            "flex items-center gap-2 rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-colors font-medium text-sm",
+            "flex items-center gap-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium text-sm",
             collapsed ? "justify-center p-2.5" : "px-3 py-2"
           )}
         >
@@ -58,7 +58,7 @@ export default function AppSidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-2 space-y-1">
+      <nav className="flex-1 px-3 py-2 space-y-0.5">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
           return (
@@ -75,9 +75,6 @@ export default function AppSidebar() {
             >
               <item.icon className="h-4 w-4 shrink-0" />
               {!collapsed && item.label}
-              {isActive && !collapsed && (
-                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_6px_hsl(var(--primary)/0.6)]" />
-              )}
             </Link>
           );
         })}

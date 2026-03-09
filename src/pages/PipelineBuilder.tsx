@@ -86,7 +86,7 @@ ${stepsYaml}`;
           <Button variant="outline" onClick={() => setShowYaml(!showYaml)}>
             {showYaml ? "Visual" : "YAML Preview"}
           </Button>
-          <Button variant="glow" className="gap-2">
+          <Button className="gap-2">
             <Save className="h-4 w-4" />
             Save & Push
           </Button>
@@ -113,7 +113,7 @@ ${stepsYaml}`;
           </div>
 
           {showYaml ? (
-            <div className="glass-card p-5">
+            <div className="bg-card border border-border rounded-lg p-5">
               <pre className="text-sm font-mono text-secondary-foreground leading-relaxed whitespace-pre-wrap overflow-x-auto">
                 {generateYaml()}
               </pre>
@@ -123,7 +123,7 @@ ${stepsYaml}`;
               {steps.map((step, i) => (
                 <div
                   key={step.id}
-                  className="glass-card p-4 flex items-center gap-3 group hover:glow-border transition-all"
+                  className="bg-card border border-border rounded-lg p-4 flex items-center gap-3 group hover:bg-muted/50 transition-all"
                 >
                   <GripVertical className="h-4 w-4 text-muted-foreground shrink-0 cursor-grab" />
                   <span className="text-xs font-mono text-muted-foreground w-5 shrink-0">{i + 1}</span>
@@ -154,7 +154,7 @@ ${stepsYaml}`;
         </div>
 
         {/* Add Steps */}
-        <div className="glass-card p-5 h-fit">
+        <div className="bg-card border border-border rounded-lg p-5 h-fit">
           <h3 className="text-sm font-semibold mb-4">Add Step</h3>
           <div className="space-y-2">
             {stepTypes.map((st) => (

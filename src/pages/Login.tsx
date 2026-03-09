@@ -22,7 +22,7 @@ export default function Login() {
         <div className="relative z-10 text-center px-12 animate-fade-in">
           <Rocket className="h-16 w-16 text-primary mx-auto mb-6" />
           <h1 className="text-5xl font-bold tracking-tight mb-4">
-            Dev<span className="text-gradient">Deploy</span>
+            Dev<span className="text-primary">Deploy</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-md mx-auto leading-relaxed">
             Your deployment control center. Build pipelines, push workflows, and ship with confidence.
@@ -49,7 +49,7 @@ export default function Login() {
         <div className="w-full max-w-md animate-fade-in">
           <div className="lg:hidden flex items-center gap-2.5 mb-10">
             <Rocket className="h-7 w-7 text-primary" />
-            <span className="text-2xl font-bold">Dev<span className="text-gradient">Deploy</span></span>
+            <span className="text-2xl font-bold">Dev<span className="text-primary">Deploy</span></span>
           </div>
 
           <h2 className="text-2xl font-bold mb-1">Welcome back</h2>
@@ -78,7 +78,7 @@ export default function Login() {
                 </button>
               </div>
             </div>
-            <Button type="submit" variant="glow" className="w-full">
+            <Button type="submit" className="w-full">
               Sign In
             </Button>
           </form>

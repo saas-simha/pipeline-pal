@@ -38,7 +38,7 @@ export default function CreateProject() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="glass-card p-6 space-y-5">
+        <div className="bg-card border border-border rounded-lg p-6 space-y-5">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Repository</h2>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -58,7 +58,7 @@ export default function CreateProject() {
           </div>
         </div>
 
-        <div className="glass-card p-6 space-y-5">
+        <div className="bg-card border border-border rounded-lg p-6 space-y-5">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Build Settings</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -73,7 +73,7 @@ export default function CreateProject() {
           </div>
         </div>
 
-        <div className="glass-card p-6 space-y-5">
+        <div className="bg-card border border-border rounded-lg p-6 space-y-5">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Deployment Target</h2>
 
           <div className="space-y-2">
@@ -120,7 +120,7 @@ export default function CreateProject() {
         </div>
 
         <div className="flex gap-3 pt-2">
-          <Button type="submit" variant="glow" className="flex-1">
+          <Button type="submit" className="flex-1">
             Create Project
           </Button>
           <Button type="button" variant="outline" onClick={() => navigate(-1)}>

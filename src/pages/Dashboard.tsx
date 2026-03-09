@@ -35,41 +35,41 @@ const recentActivity = [
 
 export default function Dashboard() {
   return (
-    <div className="p-6 lg:p-8 space-y-8 animate-fade-in">
+    <div className="p-6 lg:p-8 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+        <h1 className="text-xl font-semibold tracking-tight">Dashboard</h1>
         <p className="text-muted-foreground text-sm mt-1">Overview of your deployment pipeline</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => (
-          <div key={stat.label} className="glass-card p-5 group hover:glow-border transition-all duration-300">
+          <div key={stat.label} className="bg-card border border-border rounded-lg p-5 transition-colors">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{stat.label}</p>
-                <p className="text-3xl font-bold mt-1 tracking-tight">{stat.value}</p>
+                <p className="text-2xl font-semibold mt-1 tracking-tight">{stat.value}</p>
               </div>
-              <stat.icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+              <stat.icon className="h-4 w-4 text-muted-foreground" />
             </div>
             <p className="text-xs text-primary font-mono mt-3">{stat.change}</p>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Recent Deployments */}
-        <div className="lg:col-span-2 glass-card">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-border/50">
-            <h2 className="text-sm font-semibold">Recent Deployments</h2>
+        <div className="lg:col-span-2 bg-card border border-border rounded-lg">
+          <div className="flex items-center justify-between px-5 py-3.5 border-b border-border">
+            <h2 className="text-sm font-medium">Recent Deployments</h2>
             <Link to="/logs" className="text-xs text-primary hover:underline flex items-center gap-1">
               View all <ArrowUpRight className="h-3 w-3" />
             </Link>
           </div>
-          <div className="divide-y divide-border/30">
+          <div className="divide-y divide-border">
             {recentDeployments.map((dep, i) => (
-              <div key={i} className="flex items-center gap-4 px-5 py-3.5 hover:bg-secondary/30 transition-colors">
+              <div key={i} className="flex items-center gap-4 px-5 py-3 hover:bg-muted/50 transition-colors">
                 <StatusBadge status={dep.status} />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{dep.project}</p>
@@ -87,9 +87,9 @@ export default function Dashboard() {
         </div>
 
         {/* Activity Feed */}
-        <div className="glass-card">
-          <div className="px-5 py-4 border-b border-border/50">
-            <h2 className="text-sm font-semibold">Recent Activity</h2>
+        <div className="bg-card border border-border rounded-lg">
+          <div className="px-5 py-3.5 border-b border-border">
+            <h2 className="text-sm font-medium">Recent Activity</h2>
           </div>
           <div className="p-4 space-y-4">
             {recentActivity.map((item, i) => (

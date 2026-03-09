@@ -44,7 +44,7 @@ export default function SettingsPage() {
         {/* Content */}
         <div className="flex-1 max-w-xl">
           {activeTab === "profile" && (
-            <div className="glass-card p-6 space-y-5">
+            <div className="bg-card border border-border rounded-lg p-6 space-y-5">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Profile</h2>
               <div className="space-y-4">
                 <div className="space-y-2">
@@ -55,13 +55,13 @@ export default function SettingsPage() {
                   <Label htmlFor="settings-email">Email</Label>
                   <Input id="settings-email" defaultValue="john@example.com" className="bg-secondary border-border" />
                 </div>
-                <Button variant="glow">Save Changes</Button>
+                <Button>Save Changes</Button>
               </div>
             </div>
           )}
 
           {activeTab === "github" && (
-            <div className="glass-card p-6 space-y-5">
+            <div className="bg-card border border-border rounded-lg p-6 space-y-5">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">GitHub Integration</h2>
               <div className="flex items-center gap-4 p-4 rounded-lg bg-secondary/50 border border-border/30">
                 <Github className="h-8 w-8 text-foreground" />
@@ -79,12 +79,12 @@ export default function SettingsPage() {
                 <Input id="pat" type="password" placeholder="ghp_xxxxxxxxxxxx" className="bg-secondary border-border font-mono text-sm" />
                 <p className="text-xs text-muted-foreground">Required for pushing workflow files and managing PRs</p>
               </div>
-              <Button variant="glow">Save Token</Button>
+              <Button>Save Token</Button>
             </div>
           )}
 
           {activeTab === "secrets" && (
-            <div className="glass-card p-6 space-y-5">
+            <div className="bg-card border border-border rounded-lg p-6 space-y-5">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Environment Secrets</h2>
               <p className="text-sm text-muted-foreground">Manage secrets used in your deployment pipelines</p>
               {["FTP_PASSWORD", "DOCKER_TOKEN", "SSH_KEY"].map((secret) => (
@@ -103,7 +103,7 @@ export default function SettingsPage() {
           )}
 
           {activeTab === "notifications" && (
-            <div className="glass-card p-6 space-y-5">
+            <div className="bg-card border border-border rounded-lg p-6 space-y-5">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Notifications</h2>
               {[
                 { label: "Deployment success", desc: "Get notified when a deployment succeeds" },

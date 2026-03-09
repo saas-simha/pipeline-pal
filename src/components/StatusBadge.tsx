@@ -6,9 +6,9 @@ interface StatusBadgeProps {
 }
 
 const statusConfig = {
-  success: { label: "Success", dotClass: "status-dot status-success", textClass: "text-success" },
+  success: { label: "Success", dotClass: "status-dot status-success", textClass: "text-[hsl(var(--success))]" },
   failed: { label: "Failed", dotClass: "status-dot status-failed", textClass: "text-destructive" },
-  running: { label: "Running", dotClass: "status-dot status-running", textClass: "text-warning" },
+  running: { label: "Running", dotClass: "status-dot status-running", textClass: "text-[hsl(var(--warning))]" },
   pending: { label: "Pending", dotClass: "status-dot bg-muted-foreground", textClass: "text-muted-foreground" },
 };
 

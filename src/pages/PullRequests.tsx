@@ -67,7 +67,7 @@ export default function PullRequests() {
 
       <div className="space-y-3">
         {pullRequests.map((pr) => (
-          <div key={pr.id} className="glass-card p-5 hover:glow-border transition-all duration-300">
+          <div key={pr.id} className="bg-card border border-border rounded-lg p-5 hover:bg-muted/50 transition-all duration-300">
             <div className="flex items-start gap-4">
               <GitPullRequest className="h-5 w-5 text-primary mt-0.5 shrink-0" />
               <div className="flex-1 min-w-0">
@@ -99,7 +99,7 @@ export default function PullRequests() {
                 </div>
 
                 <div className="flex gap-2 mt-4">
-                  <Button size="sm" variant="glow" className="gap-1.5 h-8 text-xs">
+                  <Button size="sm" className="gap-1.5 h-8 text-xs">
                     <GitMerge className="h-3 w-3" />
                     Merge
                   </Button>
