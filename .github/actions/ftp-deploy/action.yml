@@ -1,0 +1,41 @@
+name: "FTP Deploy Action"
+description: "Uploads project files to cPanel using FTP via LFTP"
+
+inputs:
+  server:
+    description: "FTP server address"
+    required: true
+  username:
+    description: "FTP username"
+    required: true
+  password:
+    description: "FTP password"
+    required: true
+  path:
+    description: "Remote deployment path"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install lftp
+      run: |
+        sudo apt-get update
+        sudo apt-get install lftp -y
+      shell: bash
+
+    - name: Deploy files via FTP
+      run: |
+        lftp -c "
+          set ssl:verify-certificate no;
+          set ftp:ssl-allow yes;
+          open -u ${{ inputs.username }},${{ inputs.password }} ${{ inputs.server }};
+          mirror -R \
+            --delete \
+            --parallel=5 \
+            --exclude-glob .git* \
+            --exclude .github \
+            ./ ${{ inputs.path }};
+          bye
+        "
+      shell: bash
