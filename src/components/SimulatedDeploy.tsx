@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { CheckCircle2, Loader2, Circle } from "lucide-react";
 import { demoDeploymentSteps } from "@/lib/demo-data";
+import { isDemo } from "@/lib/env";
 
 interface SimulatedDeployProps {
   projectName: string;
@@ -62,5 +63,3 @@ export default function SimulatedDeploy({ projectName, onComplete }: SimulatedDe
     </div>
   );
 }
-
-import { isDemo } from "@/lib/env";
