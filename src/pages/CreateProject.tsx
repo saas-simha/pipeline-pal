@@ -73,7 +73,7 @@ export default function CreateProject() {
           </div>
         </div>
 
-        <div className="glass-card p-6 space-y-5">
+        <div className="bg-card border border-border rounded-lg p-6 space-y-5">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Deployment Target</h2>
 
           <div className="space-y-2">

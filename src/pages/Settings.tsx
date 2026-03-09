@@ -103,7 +103,7 @@ export default function SettingsPage() {
           )}
 
           {activeTab === "notifications" && (
-            <div className="glass-card p-6 space-y-5">
+            <div className="bg-card border border-border rounded-lg p-6 space-y-5">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Notifications</h2>
               {[
                 { label: "Deployment success", desc: "Get notified when a deployment succeeds" },

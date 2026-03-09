@@ -73,7 +73,7 @@ export default function DeploymentLogs() {
 
       <div className="space-y-3">
         {deployLogs.map((log) => (
-          <div key={log.id} className="glass-card overflow-hidden">
+          <div key={log.id} className="bg-card border border-border rounded-lg overflow-hidden">
             <button
               onClick={() => setExpanded(expanded === log.id ? null : log.id)}
               className="w-full flex items-center gap-4 px-5 py-4 hover:bg-secondary/20 transition-colors text-left"

@@ -80,7 +80,7 @@ export default function Projects() {
         {projects.map((project) => (
           <div
             key={project.name}
-            className="glass-card p-5 hover:glow-border transition-all duration-300 group"
+            className="bg-card border border-border rounded-lg p-5 hover:bg-muted/50 transition-all duration-300 group"
           >
             <div className="flex items-start justify-between">
               <div>

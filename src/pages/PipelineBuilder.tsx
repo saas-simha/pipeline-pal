@@ -154,7 +154,7 @@ ${stepsYaml}`;
         </div>
 
         {/* Add Steps */}
-        <div className="glass-card p-5 h-fit">
+        <div className="bg-card border border-border rounded-lg p-5 h-fit">
           <h3 className="text-sm font-semibold mb-4">Add Step</h3>
           <div className="space-y-2">
             {stepTypes.map((st) => (

@@ -49,7 +49,7 @@ export default function Login() {
         <div className="w-full max-w-md animate-fade-in">
           <div className="lg:hidden flex items-center gap-2.5 mb-10">
             <Rocket className="h-7 w-7 text-primary" />
-            <span className="text-2xl font-bold">Dev<span className="text-gradient">Deploy</span></span>
+            <span className="text-2xl font-bold">Dev<span className="text-primary">Deploy</span></span>
           </div>
 
           <h2 className="text-2xl font-bold mb-1">Welcome back</h2>
