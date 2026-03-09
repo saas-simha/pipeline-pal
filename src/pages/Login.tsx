@@ -1,17 +1,36 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Rocket, Github, Eye, EyeOff } from "lucide-react";
+import { useNavigate, Navigate } from "react-router-dom";
+import { Rocket, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/lib/auth";
+import { useToast } from "@/hooks/use-toast";
+import EnvBadge from "@/components/EnvBadge";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { isAuthenticated, login } = useAuth();
+  const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  if (isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/");
+    if (login(username, password)) {
+      navigate("/");
+    } else {
+      toast({
+        title: "Login failed",
+        description: "Invalid username or password.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -27,7 +46,10 @@ export default function Login() {
           <p className="text-muted-foreground text-lg max-w-md mx-auto leading-relaxed">
             Your deployment control center. Build pipelines, push workflows, and ship with confidence.
           </p>
-          <div className="mt-12 flex items-center gap-6 justify-center text-sm text-muted-foreground">
+          <div className="mt-8">
+            <EnvBadge />
+          </div>
+          <div className="mt-8 flex items-center gap-6 justify-center text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <div className="status-dot status-success" />
               <span>Pipeline Builder</span>
@@ -57,8 +79,15 @@ export default function Login() {
 
           <form onSubmit={handleLogin} className="space-y-5">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="dev@example.com" className="bg-secondary border-border" />
+              <Label htmlFor="username">Username</Label>
+              <Input
+                id="username"
+                type="text"
+                placeholder="admin"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="bg-secondary border-border"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
@@ -67,6 +96,8 @@ export default function Login() {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="bg-secondary border-border pr-10"
                 />
                 <button
@@ -83,19 +114,8 @@ export default function Login() {
             </Button>
           </form>
 
-          <div className="relative my-8">
-            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border" /></div>
-            <div className="relative flex justify-center"><span className="bg-background px-3 text-xs text-muted-foreground">or</span></div>
-          </div>
-
-          <Button variant="outline" className="w-full gap-2">
-            <Github className="h-4 w-4" />
-            Continue with GitHub
-          </Button>
-
-          <p className="text-center text-sm text-muted-foreground mt-6">
-            Don&apos;t have an account?{" "}
-            <button className="text-primary hover:underline font-medium">Sign up</button>
+          <p className="text-center text-xs text-muted-foreground mt-6">
+            Admin access only. No registration available.
           </p>
         </div>
       </div>

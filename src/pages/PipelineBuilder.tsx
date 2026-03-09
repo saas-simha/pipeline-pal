@@ -2,6 +2,9 @@ import { useState } from "react";
 import { Plus, Trash2, GripVertical, Play, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { isDemo } from "@/lib/env";
+import { demoPipelineSteps } from "@/lib/demo-data";
+import SimulatedDeploy from "@/components/SimulatedDeploy";
 
 interface PipelineStep {
   id: string;
@@ -20,23 +23,23 @@ const stepTypes = [
 ];
 
 const typeColors: Record<string, string> = {
-  checkout: "bg-info/10 text-info border-info/20",
+  checkout: "bg-[hsl(var(--info)/0.1)] text-[hsl(var(--info))] border-[hsl(var(--info)/0.2)]",
   install: "bg-primary/10 text-primary border-primary/20",
-  build: "bg-warning/10 text-warning border-warning/20",
-  test: "bg-accent/10 text-accent border-accent/20",
-  deploy: "bg-success/10 text-success border-success/20",
+  build: "bg-[hsl(var(--warning)/0.1)] text-[hsl(var(--warning))] border-[hsl(var(--warning)/0.2)]",
+  test: "bg-accent/10 text-accent-foreground border-border",
+  deploy: "bg-[hsl(var(--success)/0.1)] text-[hsl(var(--success))] border-[hsl(var(--success)/0.2)]",
   custom: "bg-secondary text-secondary-foreground border-border",
 };
 
 export default function PipelineBuilder() {
-  const [steps, setSteps] = useState<PipelineStep[]>([
-    { id: "1", name: "Checkout Repo", command: "actions/checkout@v3", type: "checkout" },
-    { id: "2", name: "Install Dependencies", command: "npm install", type: "install" },
-    { id: "3", name: "Build", command: "npm run build", type: "build" },
-    { id: "4", name: "Deploy", command: "lftp deploy", type: "deploy" },
-  ]);
+  const [steps, setSteps] = useState<PipelineStep[]>(
+    isDemo ? demoPipelineSteps : [
+      { id: "1", name: "Checkout Repo", command: "actions/checkout@v3", type: "checkout" },
+    ]
+  );
 
   const [showYaml, setShowYaml] = useState(false);
+  const [running, setRunning] = useState(false);
 
   const addStep = (type: PipelineStep["type"], label: string, cmd: string) => {
     setSteps([...steps, { id: Date.now().toString(), name: label, command: cmd, type }]);
@@ -80,18 +83,34 @@ ${stepsYaml}`;
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Pipeline Builder</h1>
-          <p className="text-muted-foreground text-sm mt-1">Design your CI/CD workflow visually</p>
+          <p className="text-muted-foreground text-sm mt-1">
+            Design your CI/CD workflow visually
+            {isDemo && <span className="ml-2 text-[hsl(var(--warning))]">(Demo)</span>}
+          </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" onClick={() => setShowYaml(!showYaml)}>
             {showYaml ? "Visual" : "YAML Preview"}
           </Button>
+          {isDemo && (
+            <Button variant="outline" className="gap-2" onClick={() => setRunning(true)} disabled={running}>
+              <Play className="h-4 w-4" />
+              Run Pipeline
+            </Button>
+          )}
           <Button className="gap-2">
             <Save className="h-4 w-4" />
             Save & Push
           </Button>
         </div>
       </div>
+
+      {running && (
+        <SimulatedDeploy
+          projectName="Pipeline"
+          onComplete={() => setRunning(false)}
+        />
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Steps Panel */}
