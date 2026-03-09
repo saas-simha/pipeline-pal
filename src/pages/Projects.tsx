@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function Projects() {
+  const navigate = useNavigate();
   const projects = demoProjects;
   const [deployingProject, setDeployingProject] = useState<string | null>(null);
 
