@@ -1,4 +1,4 @@
-// No changes, only deployment
+// Trigger redeployment with corrected build pipeline
 export const demoProjects = [
   {
     name: "SmartTaskPro",
