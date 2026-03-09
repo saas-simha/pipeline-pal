@@ -29,13 +29,16 @@ runs:
         lftp -c "
           set ssl:verify-certificate no;
           set ftp:ssl-allow yes;
+          set cmd:fail-exit yes;
           open -u ${{ inputs.username }},${{ inputs.password }} ${{ inputs.server }};
+          mkdir -p ${{ inputs.path }};
+          cd ${{ inputs.path }};
           mirror -R \
             --delete \
+            --delete-first \
             --parallel=5 \
-            --exclude-glob .git* \
-            --exclude .github \
-            ./dist/ ${{ inputs.path }};
+            --verbose=2 \
+            ./dist/ .;
           bye
         "
       shell: bash
