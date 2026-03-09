@@ -1,0 +1,22 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Deploy using FTP Action
+      uses: ./.github/actions/ftp-deploy
+      with:
+        server: ${{ secrets.AI_FTP_SERVER }}
+        username: ${{ secrets.AI_FTP_USERNAME }}
+        password: ${{ secrets.AI_FTP_PASSWORD }}
+        path: ${{ secrets.AI_FTP_PATH }}
