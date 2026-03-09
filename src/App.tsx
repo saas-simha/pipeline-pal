@@ -9,6 +9,7 @@ import AppLayout from "@/components/AppLayout";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import Projects from "@/pages/Projects";
+import ProjectDetails from "@/pages/ProjectDetails";
 import CreateProject from "@/pages/CreateProject";
 import PipelineBuilder from "@/pages/PipelineBuilder";
 import DeploymentLogs from "@/pages/DeploymentLogs";
