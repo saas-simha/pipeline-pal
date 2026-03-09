@@ -61,7 +61,7 @@ export default function SettingsPage() {
           )}
 
           {activeTab === "github" && (
-            <div className="glass-card p-6 space-y-5">
+            <div className="bg-card border border-border rounded-lg p-6 space-y-5">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">GitHub Integration</h2>
               <div className="flex items-center gap-4 p-4 rounded-lg bg-secondary/50 border border-border/30">
                 <Github className="h-8 w-8 text-foreground" />
