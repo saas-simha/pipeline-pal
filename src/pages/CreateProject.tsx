@@ -38,7 +38,7 @@ export default function CreateProject() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="glass-card p-6 space-y-5">
+        <div className="bg-card border border-border rounded-lg p-6 space-y-5">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Repository</h2>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
