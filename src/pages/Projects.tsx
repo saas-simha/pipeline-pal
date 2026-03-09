@@ -1,13 +1,21 @@
-import { Link } from "react-router-dom";
-import { Plus, GitBranch, Clock, ExternalLink, MoreVertical, Play } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Plus, GitBranch, Clock, ExternalLink, MoreVertical, Play, Pencil, Workflow, FileText, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import StatusBadge from "@/components/StatusBadge";
 import { isDemo } from "@/lib/env";
 import { demoProjects } from "@/lib/demo-data";
 import { useState } from "react";
 import SimulatedDeploy from "@/components/SimulatedDeploy";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Projects() {
+  const navigate = useNavigate();
   const projects = demoProjects;
   const [deployingProject, setDeployingProject] = useState<string | null>(null);
 
@@ -40,7 +48,8 @@ export default function Projects() {
         {projects.map((project) => (
           <div
             key={project.name}
-            className="bg-card border border-border rounded-lg p-5 hover:bg-muted/50 transition-all duration-300 group"
+            className="bg-card border border-border rounded-lg p-5 hover:bg-muted/50 transition-all duration-300 group cursor-pointer"
+            onClick={() => navigate(`/projects/${project.name.toLowerCase().replace(/\s+/g, "")}`)}
           >
             <div className="flex items-start justify-between">
               <div>
@@ -50,9 +59,34 @@ export default function Projects() {
                   <span className="text-xs font-mono">{project.repo}</span>
                 </div>
               </div>
-              <button className="text-muted-foreground hover:text-foreground transition-colors opacity-0 group-hover:opacity-100">
-                <MoreVertical className="h-4 w-4" />
-              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="text-muted-foreground hover:text-foreground transition-colors opacity-0 group-hover:opacity-100"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <MoreVertical className="h-4 w-4" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={(e) => { e.stopPropagation(); navigate(`/projects/${project.name.toLowerCase().replace(/\s+/g, "")}`); }}>
+                    <Pencil className="h-4 w-4 mr-2" /> Edit Project
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={(e) => { e.stopPropagation(); navigate("/pipelines"); }}>
+                    <Workflow className="h-4 w-4 mr-2" /> Open Pipeline
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={(e) => { e.stopPropagation(); setDeployingProject(project.name); }}>
+                    <Play className="h-4 w-4 mr-2" /> Deploy
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={(e) => { e.stopPropagation(); navigate("/logs"); }}>
+                    <FileText className="h-4 w-4 mr-2" /> View Logs
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={(e) => e.stopPropagation()}>
+                    <Trash2 className="h-4 w-4 mr-2" /> Delete Project
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
 
             <div className="flex items-center gap-4 mt-4 text-xs">

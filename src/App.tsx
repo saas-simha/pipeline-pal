@@ -9,6 +9,7 @@ import AppLayout from "@/components/AppLayout";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import Projects from "@/pages/Projects";
+import ProjectDetails from "@/pages/ProjectDetails";
 import CreateProject from "@/pages/CreateProject";
 import PipelineBuilder from "@/pages/PipelineBuilder";
 import DeploymentLogs from "@/pages/DeploymentLogs";
@@ -31,6 +32,7 @@ const App = () => (
               <Route element={<AppLayout />}>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/projects" element={<Projects />} />
+                <Route path="/projects/:projectId" element={<ProjectDetails />} />
                 <Route path="/projects/new" element={<CreateProject />} />
                 <Route path="/pipelines" element={<PipelineBuilder />} />
                 <Route path="/logs" element={<DeploymentLogs />} />
