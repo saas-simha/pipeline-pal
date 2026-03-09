@@ -24,7 +24,7 @@ runs:
         sudo apt-get install lftp -y
       shell: bash
 
-    - name: Deploy files via FTP
+    - name: Deploy dist folder via FTP
       run: |
         lftp -c "
           set ssl:verify-certificate no;
@@ -35,7 +35,7 @@ runs:
             --parallel=5 \
             --exclude-glob .git* \
             --exclude .github \
-            ./ ${{ inputs.path }};
+            ./dist/ ${{ inputs.path }};
           bye
         "
       shell: bash
