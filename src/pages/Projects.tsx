@@ -1,11 +1,18 @@
-import { Link } from "react-router-dom";
-import { Plus, GitBranch, Clock, ExternalLink, MoreVertical, Play } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Plus, GitBranch, Clock, ExternalLink, MoreVertical, Play, Pencil, Workflow, FileText, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import StatusBadge from "@/components/StatusBadge";
 import { isDemo } from "@/lib/env";
 import { demoProjects } from "@/lib/demo-data";
 import { useState } from "react";
 import SimulatedDeploy from "@/components/SimulatedDeploy";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Projects() {
   const projects = demoProjects;
