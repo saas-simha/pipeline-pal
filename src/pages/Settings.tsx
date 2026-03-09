@@ -84,7 +84,7 @@ export default function SettingsPage() {
           )}
 
           {activeTab === "secrets" && (
-            <div className="glass-card p-6 space-y-5">
+            <div className="bg-card border border-border rounded-lg p-6 space-y-5">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Environment Secrets</h2>
               <p className="text-sm text-muted-foreground">Manage secrets used in your deployment pipelines</p>
               {["FTP_PASSWORD", "DOCKER_TOKEN", "SSH_KEY"].map((secret) => (
