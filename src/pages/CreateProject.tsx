@@ -1,19 +1,24 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, FolderGit2 } from "lucide-react";
+import { ArrowLeft, FolderGit2, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 
 const deployTypes = ["FTP", "SFTP", "Docker", "VPS", "cPanel"];
 
 export default function CreateProject() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [deployType, setDeployType] = useState("FTP");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    toast({
+      title: "Project created",
+      description: "Your new project has been configured successfully.",
+    });
     navigate("/projects");
   };
 
@@ -38,89 +43,98 @@ export default function CreateProject() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-card border border-border rounded-lg p-6 space-y-5">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Repository</h2>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Project Name</Label>
-              <Input id="name" placeholder="SmartTaskPro" className="bg-secondary border-border" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="branch">Branch</Label>
-              <Input id="branch" placeholder="main" defaultValue="main" className="bg-secondary border-border" />
-            </div>
+        <div className="bg-card border border-border rounded-lg overflow-hidden">
+          <div className="px-6 py-3 border-b border-border bg-muted/20">
+            <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Repository</h2>
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="repo">Git Repository URL</Label>
-            <Input id="repo" placeholder="https://github.com/user/project" className="bg-secondary border-border font-mono text-sm" />
-          </div>
-        </div>
-
-        <div className="bg-card border border-border rounded-lg p-6 space-y-5">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Build Settings</h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="build">Build Command</Label>
-              <Input id="build" placeholder="npm run build" className="bg-secondary border-border font-mono text-sm" />
+          <div className="p-6 space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Project Name</Label>
+                <Input id="name" placeholder="SmartTaskPro" className="bg-secondary border-border" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="branch">Branch</Label>
+                <Input id="branch" placeholder="main" defaultValue="main" className="bg-secondary border-border" />
+              </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="deploy-cmd">Deploy Command</Label>
-              <Input id="deploy-cmd" placeholder="npm run deploy" className="bg-secondary border-border font-mono text-sm" />
+              <Label htmlFor="repo">Git Repository URL</Label>
+              <Input id="repo" placeholder="https://github.com/user/project" className="bg-secondary border-border font-mono text-sm" />
             </div>
           </div>
         </div>
 
-        <div className="bg-card border border-border rounded-lg p-6 space-y-5">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Deployment Target</h2>
-
-          <div className="space-y-2">
-            <Label>Deployment Type</Label>
-            <div className="flex flex-wrap gap-2">
-              {deployTypes.map((type) => (
-                <button
-                  key={type}
-                  type="button"
-                  onClick={() => setDeployType(type)}
-                  className={`px-3 py-1.5 rounded-md text-xs font-mono uppercase tracking-wider transition-all ${
-                    deployType === type
-                      ? "bg-primary text-primary-foreground shadow-[0_0_12px_hsl(var(--primary)/0.3)]"
-                      : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                  }`}
-                >
-                  {type}
-                </button>
-              ))}
+        <div className="bg-card border border-border rounded-lg overflow-hidden">
+          <div className="px-6 py-3 border-b border-border bg-muted/20">
+            <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Build Settings</h2>
+          </div>
+          <div className="p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="build">Build Command</Label>
+                <Input id="build" placeholder="npm run build" className="bg-secondary border-border font-mono text-sm" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="deploy-cmd">Deploy Command</Label>
+                <Input id="deploy-cmd" placeholder="npm run deploy" className="bg-secondary border-border font-mono text-sm" />
+              </div>
             </div>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="host">Server Host</Label>
-              <Input id="host" placeholder="ftp.example.com" className="bg-secondary border-border font-mono text-sm" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="username">Server Username</Label>
-              <Input id="username" placeholder="deploy-user" className="bg-secondary border-border font-mono text-sm" />
-            </div>
+        <div className="bg-card border border-border rounded-lg overflow-hidden">
+          <div className="px-6 py-3 border-b border-border bg-muted/20">
+            <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Deployment Target</h2>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="p-6 space-y-5">
             <div className="space-y-2">
-              <Label htmlFor="password">Server Password</Label>
-              <Input id="password" type="password" placeholder="••••••••" className="bg-secondary border-border" />
+              <Label>Deployment Type</Label>
+              <div className="flex flex-wrap gap-2">
+                {deployTypes.map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setDeployType(type)}
+                    className={`px-3.5 py-2 rounded-md text-xs font-mono uppercase tracking-wider transition-all border ${
+                      deployType === type
+                        ? "bg-primary text-primary-foreground border-primary shadow-[0_0_12px_hsl(var(--primary)/0.2)]"
+                        : "bg-secondary text-secondary-foreground border-border hover:border-muted-foreground/30"
+                    }`}
+                  >
+                    {type}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="path">Deployment Path</Label>
-              <Input id="path" placeholder="public_html" className="bg-secondary border-border font-mono text-sm" />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="host">Server Host</Label>
+                <Input id="host" placeholder="ftp.example.com" className="bg-secondary border-border font-mono text-sm" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="username">Server Username</Label>
+                <Input id="username" placeholder="deploy-user" className="bg-secondary border-border font-mono text-sm" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="password">Server Password</Label>
+                <Input id="password" type="password" placeholder="••••••••" className="bg-secondary border-border" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="path">Deployment Path</Label>
+                <Input id="path" placeholder="public_html" className="bg-secondary border-border font-mono text-sm" />
+              </div>
             </div>
           </div>
         </div>
 
         <div className="flex gap-3 pt-2">
-          <Button type="submit" className="flex-1">
+          <Button type="submit" className="flex-1 gap-2">
+            <Rocket className="h-4 w-4" />
             Create Project
           </Button>
           <Button type="button" variant="outline" onClick={() => navigate(-1)}>

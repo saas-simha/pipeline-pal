@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Plus, GitBranch, Clock, ExternalLink, MoreVertical, Play, Pencil, Workflow, FileText, Trash2 } from "lucide-react";
+import { Plus, GitBranch, Clock, ExternalLink, MoreVertical, Play, Pencil, Workflow, FileText, Trash2, Server } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import StatusBadge from "@/components/StatusBadge";
 import { isDemo } from "@/lib/env";
@@ -26,7 +26,7 @@ export default function Projects() {
           <h1 className="text-2xl font-bold tracking-tight">Projects</h1>
           <p className="text-muted-foreground text-sm mt-1">
             {projects.length} projects configured
-            {isDemo && <span className="ml-2 text-[hsl(var(--warning))]">(Demo)</span>}
+            {isDemo && <span className="ml-2 text-warning">(Demo)</span>}
           </p>
         </div>
         <Link to="/projects/new">
@@ -48,15 +48,20 @@ export default function Projects() {
         {projects.map((project) => (
           <div
             key={project.name}
-            className="bg-card border border-border rounded-lg p-5 hover:bg-muted/50 transition-all duration-300 group cursor-pointer"
+            className="bg-card border border-border rounded-lg p-5 hover:shadow-md hover:border-primary/20 transition-all duration-300 group cursor-pointer"
             onClick={() => navigate(`/projects/${project.name.toLowerCase().replace(/\s+/g, "")}`)}
           >
             <div className="flex items-start justify-between">
-              <div>
-                <h3 className="font-semibold text-base">{project.name}</h3>
-                <div className="flex items-center gap-1.5 mt-1 text-muted-foreground">
-                  <ExternalLink className="h-3 w-3" />
-                  <span className="text-xs font-mono">{project.repo}</span>
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-md bg-primary/10 mt-0.5">
+                  <Server className="h-4 w-4 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-base">{project.name}</h3>
+                  <div className="flex items-center gap-1.5 mt-1 text-muted-foreground">
+                    <ExternalLink className="h-3 w-3" />
+                    <span className="text-xs font-mono">{project.repo}</span>
+                  </div>
                 </div>
               </div>
               <DropdownMenu>
@@ -89,17 +94,17 @@ export default function Projects() {
               </DropdownMenu>
             </div>
 
-            <div className="flex items-center gap-4 mt-4 text-xs">
+            <div className="flex items-center gap-3 mt-4 text-xs">
               <div className="flex items-center gap-1.5 text-muted-foreground">
                 <GitBranch className="h-3 w-3" />
                 <span className="font-mono">{project.branch}</span>
               </div>
-              <span className="px-2 py-0.5 rounded bg-secondary text-secondary-foreground font-mono text-[10px] uppercase tracking-wider">
+              <span className="px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground font-mono text-[10px] uppercase tracking-wider">
                 {project.deployType}
               </span>
             </div>
 
-            <div className="flex items-center justify-between mt-4 pt-4 border-t border-border/30">
+            <div className="flex items-center justify-between mt-4 pt-4 border-t border-border/50">
               <StatusBadge status={project.status} />
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -108,8 +113,8 @@ export default function Projects() {
                 </div>
                 {isDemo && (
                   <button
-                    onClick={() => setDeployingProject(project.name)}
-                    className="flex items-center gap-1 text-xs text-primary hover:underline"
+                    onClick={(e) => { e.stopPropagation(); setDeployingProject(project.name); }}
+                    className="flex items-center gap-1 text-xs text-primary hover:underline font-medium"
                     disabled={!!deployingProject}
                   >
                     <Play className="h-3 w-3" />
