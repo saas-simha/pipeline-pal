@@ -74,13 +74,52 @@ export const demoProjects = [
   },
 ];
 
-export const demoPipelineSteps = [
-  { id: "1", name: "Checkout Repository", command: "actions/checkout@v3", type: "checkout" as const },
-  { id: "2", name: "Install Dependencies", command: "npm install", type: "install" as const },
-  { id: "3", name: "Run Build", command: "npm run build", type: "build" as const },
-  { id: "4", name: "Run Tests", command: "npm test", type: "test" as const },
-  { id: "5", name: "Deploy", command: "lftp deploy", type: "deploy" as const },
-];
+export const demoPipelines = {
+  SmartTaskPro: [
+    { id: "1", name: "Checkout Repository", command: "actions/checkout@v3", type: "checkout" as const },
+    { id: "2", name: "Install Dependencies", command: "npm install", type: "install" as const },
+    { id: "3", name: "Run Build", command: "npm run build", type: "build" as const },
+    { id: "4", name: "Run Tests", command: "npm test", type: "test" as const },
+    { id: "5", name: "Deploy", command: "lftp deploy", type: "deploy" as const },
+  ],
+
+  EcommerceAPI: [
+    { id: "1", name: "Checkout Repository", command: "actions/checkout@v3", type: "checkout" as const },
+    { id: "2", name: "Install Dependencies", command: "npm install", type: "install" as const },
+    { id: "3", name: "Run Tests", command: "npm test", type: "test" as const },
+    { id: "4", name: "Build Docker Image", command: "docker build .", type: "build" as const },
+    { id: "5", name: "Deploy Container", command: "docker run", type: "deploy" as const },
+  ],
+
+  PortfolioSite: [
+    { id: "1", name: "Checkout Repository", command: "actions/checkout@v3", type: "checkout" as const },
+    { id: "2", name: "Install Dependencies", command: "npm install", type: "install" as const },
+    { id: "3", name: "Build Static Site", command: "npm run build", type: "build" as const },
+    { id: "4", name: "Deploy", command: "lftp deploy", type: "deploy" as const },
+  ],
+
+  ChatApp: [
+    { id: "1", name: "Checkout Repository", command: "actions/checkout@v3", type: "checkout" as const },
+    { id: "2", name: "Install Dependencies", command: "npm install", type: "install" as const },
+    { id: "3", name: "Run Tests", command: "npm test", type: "test" as const },
+    { id: "4", name: "Build", command: "npm run build", type: "build" as const },
+    { id: "5", name: "Deploy to VPS", command: "scp deploy", type: "deploy" as const },
+  ],
+
+  AnalyticsDash: [
+    { id: "1", name: "Checkout Repository", command: "actions/checkout@v3", type: "checkout" as const },
+    { id: "2", name: "Install Dependencies", command: "npm install", type: "install" as const },
+    { id: "3", name: "Run Build", command: "npm run build", type: "build" as const },
+    { id: "4", name: "Deploy via SFTP", command: "sftp deploy", type: "deploy" as const },
+  ],
+
+  BlogPlatform: [
+    { id: "1", name: "Checkout Repository", command: "actions/checkout@v3", type: "checkout" as const },
+    { id: "2", name: "Install Dependencies", command: "npm install", type: "install" as const },
+    { id: "3", name: "Build Docker Image", command: "docker build .", type: "build" as const },
+    { id: "4", name: "Deploy Container", command: "docker run", type: "deploy" as const },
+  ],
+};
 
 export const demoDeploymentSteps = [
   { label: "Cloning repository", duration: 800 },
