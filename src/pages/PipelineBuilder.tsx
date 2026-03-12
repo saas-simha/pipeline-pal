@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Play, Save, RotateCcw, RefreshCw } from "lucide-react";
+import { Play, Save, RotateCcw, RefreshCw, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { isDemo } from "@/lib/env";
 import { demoPipelineSteps } from "@/lib/demo-data";
@@ -9,8 +9,10 @@ import TargetPanel, { type TargetConfig } from "@/components/pipeline/TargetPane
 import PipelineStepsPanel, { type PipelineStep } from "@/components/pipeline/PipelineStepsPanel";
 import PipelineFlowBar, { type StageStatus } from "@/components/pipeline/PipelineFlowBar";
 import WorkflowPreview from "@/components/pipeline/WorkflowPreview";
+import { useToast } from "@/hooks/use-toast";
 
 export default function PipelineBuilder() {
+  const { toast } = useToast();
   const [activeStage, setActiveStage] = useState<"source" | "pipeline" | "target">("pipeline");
 
   const [steps, setSteps] = useState<PipelineStep[]>(
@@ -60,6 +62,12 @@ export default function PipelineBuilder() {
           : s
       )
     );
+    toast({ title: "Source updated", description: `Repository: ${config.repository}` });
+  };
+
+  const handleTargetSave = (config: TargetConfig) => {
+    setTarget(config);
+    toast({ title: "Target updated", description: `Deploy to ${config.domain}` });
   };
 
   const runPipeline = useCallback(() => {
@@ -80,8 +88,12 @@ export default function PipelineBuilder() {
     setTimeout(() => {
       setRunning(false);
       setStageStatuses({ source: "idle", pipeline: "idle", target: "idle" });
-    }, 2000);
+    }, 2500);
   }, []);
+
+  const handleSave = () => {
+    toast({ title: "Pipeline saved", description: `${steps.length} steps configured` });
+  };
 
   return (
     <div className="p-6 lg:p-8 space-y-6 animate-fade-in">
@@ -91,14 +103,20 @@ export default function PipelineBuilder() {
           <h1 className="text-2xl font-bold tracking-tight">Pipeline Builder</h1>
           <p className="text-muted-foreground text-sm mt-1">
             Design your CI/CD workflow: Source → Pipeline → Target
-            {isDemo && <span className="ml-2 text-[hsl(var(--warning))]">(Demo)</span>}
+            {isDemo && <span className="ml-2 text-warning">(Demo)</span>}
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={() => setShowYaml(!showYaml)}>
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-2"
+            onClick={() => setShowYaml(!showYaml)}
+          >
+            <Terminal className="h-4 w-4" />
             {showYaml ? "Visual" : "YAML"}
           </Button>
-          <Button className="gap-2" size="sm">
+          <Button className="gap-2" size="sm" onClick={handleSave}>
             <Save className="h-4 w-4" />
             Save
           </Button>
@@ -125,7 +143,7 @@ export default function PipelineBuilder() {
               disabled={running}
             >
               <Play className="h-4 w-4" />
-              Run Pipeline
+              {running ? "Running..." : "Run Pipeline"}
             </Button>
             <Button variant="outline" size="sm" className="gap-2" disabled={running}>
               <RefreshCw className="h-4 w-4" />
@@ -161,7 +179,7 @@ export default function PipelineBuilder() {
           )}
 
           {activeStage === "target" && (
-            <TargetPanel target={target} onSave={setTarget} />
+            <TargetPanel target={target} onSave={handleTargetSave} />
           )}
         </div>
       )}

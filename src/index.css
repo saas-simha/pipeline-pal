@@ -7,7 +7,7 @@
 @layer base {
   :root,
   .light {
-    --background: 210 40% 98%;
+    --background: 220 20% 97%;
     --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
@@ -19,13 +19,13 @@
     --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96%;
+    --secondary: 220 14% 94%;
     --secondary-foreground: 222 47% 11%;
 
-    --muted: 210 40% 96%;
+    --muted: 220 14% 94%;
     --muted-foreground: 215 16% 47%;
 
-    --accent: 210 40% 96%;
+    --accent: 220 14% 94%;
     --accent-foreground: 222 47% 11%;
 
     --destructive: 0 84% 60%;
@@ -41,11 +41,15 @@
     --warning: 38 92% 50%;
     --info: 217 91% 60%;
 
+    --terminal-bg: 220 13% 18%;
+    --terminal-fg: 120 20% 75%;
+    --terminal-border: 220 13% 25%;
+
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 215 16% 47%;
     --sidebar-primary: 217 91% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent: 220 14% 94%;
     --sidebar-accent-foreground: 222 47% 11%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217 91% 60%;
@@ -55,29 +59,29 @@
     --background: 222 47% 11%;
     --foreground: 220 13% 91%;
 
-    --card: 217 33% 17%;
+    --card: 220 26% 14%;
     --card-foreground: 220 13% 91%;
 
-    --popover: 217 33% 17%;
+    --popover: 220 26% 14%;
     --popover-foreground: 220 13% 91%;
 
     --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 217 19% 27%;
+    --secondary: 217 19% 22%;
     --secondary-foreground: 220 13% 91%;
 
-    --muted: 217 19% 27%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 217 19% 22%;
+    --muted-foreground: 215 20% 60%;
 
-    --accent: 217 19% 27%;
+    --accent: 217 19% 22%;
     --accent-foreground: 220 13% 91%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 215 19% 35%;
-    --input: 215 19% 35%;
+    --border: 215 19% 25%;
+    --input: 215 19% 25%;
     --ring: 217 91% 60%;
 
     --radius: 0.5rem;
@@ -86,13 +90,17 @@
     --warning: 38 92% 50%;
     --info: 217 91% 60%;
 
-    --sidebar-background: 220 26% 14%;
-    --sidebar-foreground: 215 20% 65%;
+    --terminal-bg: 220 20% 8%;
+    --terminal-fg: 120 20% 75%;
+    --terminal-border: 220 13% 15%;
+
+    --sidebar-background: 222 47% 9%;
+    --sidebar-foreground: 215 20% 55%;
     --sidebar-primary: 217 91% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 19% 27%;
+    --sidebar-accent: 217 19% 18%;
     --sidebar-accent-foreground: 220 13% 91%;
-    --sidebar-border: 215 19% 35%;
+    --sidebar-border: 215 19% 20%;
     --sidebar-ring: 217 91% 60%;
   }
 }
@@ -118,7 +126,7 @@
   }
 
   .status-success {
-    @apply bg-[hsl(var(--success))];
+    @apply bg-success;
   }
 
   .status-failed {
@@ -126,6 +134,62 @@
   }
 
   .status-running {
-    @apply bg-[hsl(var(--warning))] animate-pulse;
+    @apply bg-warning animate-pulse;
   }
+
+  .status-pending {
+    @apply bg-muted-foreground;
+  }
+}
+
+/* Terminal / CI log styling */
+.terminal-output {
+  background: hsl(var(--terminal-bg));
+  border: 1px solid hsl(var(--terminal-border));
+  color: hsl(var(--terminal-fg));
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  border-radius: var(--radius);
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.terminal-output .log-info {
+  color: hsl(var(--info));
+}
+
+.terminal-output .log-success {
+  color: hsl(var(--success));
+}
+
+.terminal-output .log-error {
+  color: hsl(var(--destructive));
+}
+
+.terminal-output .log-warn {
+  color: hsl(var(--warning));
+}
+
+.terminal-output .log-dim {
+  color: hsl(var(--muted-foreground));
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
 }

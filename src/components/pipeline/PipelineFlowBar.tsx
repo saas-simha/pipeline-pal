@@ -1,4 +1,4 @@
-import { FolderGit2, Workflow, Server, CheckCircle2, Loader2, Circle } from "lucide-react";
+import { FolderGit2, Workflow, Server, CheckCircle2, Loader2, Circle, XCircle, ChevronRight } from "lucide-react";
 
 export type StageStatus = "idle" | "running" | "success" | "failed";
 
@@ -11,18 +11,17 @@ interface PipelineFlowBarProps {
 }
 
 function StageIcon({ status }: { status: StageStatus }) {
-  if (status === "success") return <CheckCircle2 className="h-4 w-4 text-[hsl(var(--success))]" />;
-  if (status === "running") return <Loader2 className="h-4 w-4 text-[hsl(var(--warning))] animate-spin" />;
-  if (status === "failed") return <CheckCircle2 className="h-4 w-4 text-destructive" />;
+  if (status === "success") return <CheckCircle2 className="h-4 w-4 text-success" />;
+  if (status === "running") return <Loader2 className="h-4 w-4 text-warning animate-spin" />;
+  if (status === "failed") return <XCircle className="h-4 w-4 text-destructive" />;
   return <Circle className="h-4 w-4 text-muted-foreground" />;
 }
 
-function stageRingClass(status: StageStatus, active: boolean) {
-  if (active) return "ring-2 ring-primary border-primary";
-  if (status === "success") return "border-[hsl(var(--success)/0.4)]";
-  if (status === "running") return "border-[hsl(var(--warning)/0.4)]";
-  if (status === "failed") return "border-destructive/40";
-  return "border-border";
+function connectorClass(leftStatus: StageStatus, rightStatus: StageStatus) {
+  if (leftStatus === "success" && (rightStatus === "running" || rightStatus === "success"))
+    return "bg-success";
+  if (leftStatus === "success") return "bg-success/40";
+  return "bg-border";
 }
 
 export default function PipelineFlowBar({
@@ -33,26 +32,48 @@ export default function PipelineFlowBar({
   onStageClick,
 }: PipelineFlowBarProps) {
   const stages = [
-    { key: "source" as const, label: "Source", icon: FolderGit2, status: sourceStatus },
-    { key: "pipeline" as const, label: "Pipeline", icon: Workflow, status: pipelineStatus },
-    { key: "target" as const, label: "Target", icon: Server, status: targetStatus },
+    { key: "source" as const, label: "Source", sublabel: "Repository", icon: FolderGit2, status: sourceStatus },
+    { key: "pipeline" as const, label: "Pipeline", sublabel: "Build & Test", icon: Workflow, status: pipelineStatus },
+    { key: "target" as const, label: "Target", sublabel: "Deploy", icon: Server, status: targetStatus },
   ];
 
   return (
-    <div className="flex items-center justify-center gap-0">
+    <div className="flex items-center justify-center gap-0 py-2">
       {stages.map((stage, i) => (
         <div key={stage.key} className="flex items-center">
           <button
             onClick={() => onStageClick(stage.key)}
-            className={`flex items-center gap-2.5 px-5 py-3 rounded-lg bg-card border transition-all hover:bg-muted/50 cursor-pointer ${stageRingClass(stage.status, activeStage === stage.key)}`}
+            className={`relative flex items-center gap-3 px-6 py-3.5 rounded-lg bg-card border-2 transition-all hover:shadow-md cursor-pointer ${
+              activeStage === stage.key
+                ? "border-primary shadow-[0_0_16px_hsl(var(--primary)/0.15)]"
+                : stage.status === "success"
+                ? "border-success/30"
+                : stage.status === "running"
+                ? "border-warning/40"
+                : stage.status === "failed"
+                ? "border-destructive/30"
+                : "border-border hover:border-muted-foreground/30"
+            }`}
           >
-            <stage.icon className="h-4 w-4 text-primary" />
-            <span className="text-sm font-semibold">{stage.label}</span>
+            <div className={`p-2 rounded-md ${
+              activeStage === stage.key ? "bg-primary/10" : "bg-secondary"
+            }`}>
+              <stage.icon className={`h-4 w-4 ${
+                activeStage === stage.key ? "text-primary" : "text-muted-foreground"
+              }`} />
+            </div>
+            <div className="text-left">
+              <span className="text-sm font-semibold block">{stage.label}</span>
+              <span className="text-[10px] text-muted-foreground">{stage.sublabel}</span>
+            </div>
             <StageIcon status={stage.status} />
           </button>
           {i < stages.length - 1 && (
-            <div className="w-10 h-px bg-border relative mx-1">
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-l-[5px] border-l-muted-foreground border-y-[4px] border-y-transparent" />
+            <div className="flex items-center mx-2">
+              <div className={`w-6 h-0.5 transition-colors ${connectorClass(stages[i].status, stages[i + 1].status)}`} />
+              <ChevronRight className={`h-4 w-4 -ml-1 ${
+                stages[i].status === "success" ? "text-success" : "text-muted-foreground"
+              }`} />
             </div>
           )}
         </div>
