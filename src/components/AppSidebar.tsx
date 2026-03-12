@@ -35,10 +35,12 @@ export default function AppSidebar() {
     >
       {/* Logo */}
       <div className="flex items-center gap-2.5 px-4 h-14 border-b border-sidebar-border">
-        <Rocket className="h-5 w-5 text-primary shrink-0" />
+        <div className="p-1 rounded-md bg-primary/10">
+          <Rocket className="h-4 w-4 text-primary shrink-0" />
+        </div>
         {!collapsed && (
-          <span className="text-base font-semibold tracking-tight text-foreground">
-            DevDeploy
+          <span className="text-base font-bold tracking-tight text-foreground">
+            Dev<span className="text-primary">Deploy</span>
           </span>
         )}
       </div>
@@ -60,28 +62,36 @@ export default function AppSidebar() {
       {/* Navigation */}
       <nav className="flex-1 px-3 py-2 space-y-0.5">
         {navItems.map((item) => {
-          const isActive = location.pathname === item.path;
+          const isActive =
+            item.path === "/"
+              ? location.pathname === "/"
+              : location.pathname.startsWith(item.path);
           return (
             <Link
               key={item.path}
               to={item.path}
               className={cn(
-                "flex items-center gap-2.5 rounded-md text-sm transition-colors",
+                "flex items-center gap-2.5 rounded-md text-sm transition-all duration-200",
                 collapsed ? "justify-center p-2.5" : "px-3 py-2",
                 isActive
-                  ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                  ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium shadow-sm"
                   : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
               )}
             >
-              <item.icon className="h-4 w-4 shrink-0" />
+              <item.icon className={cn("h-4 w-4 shrink-0", isActive && "text-primary")} />
               {!collapsed && item.label}
             </Link>
           );
         })}
       </nav>
 
-      {/* Collapse toggle */}
-      <div className="px-3 pb-4">
+      {/* Version & Collapse */}
+      <div className="px-3 pb-4 space-y-2">
+        {!collapsed && (
+          <div className="px-3 py-2">
+            <p className="text-[10px] text-muted-foreground font-mono">v1.0.0 • DevDeploy</p>
+          </div>
+        )}
         <button
           onClick={() => setCollapsed(!collapsed)}
           className={cn(
